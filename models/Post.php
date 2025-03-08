@@ -7,20 +7,21 @@ class Post
   private $table = 'posts';
 
   // Post properties
-  public $id;
-  public $category_id;
-  public $category_name;
-  public $title;
-  public $body;
-  public $author;
-  public $created_at;
+  // public $id;
+  // public $category_id;
+  // public $category_name;
+  // public $title;
+  // public $body;
+  // public $author;
+  // public $created_at;
+  public $name;
 
   public function __construct($db)
   {
     $this->conn = $db;
   }
 
-  // Get Posts
+  // Get all products
   public function read()
   {
     // Ctreate Query
@@ -36,22 +37,13 @@ class Post
     return $stmt;
   }
 
-  // Get Single Post
-  public function get_single_post()
+  // Get products by name
+  public function get_single_post($param)
   {
+    // $param = "חלב";
     // Ctreate Query
-    $query = 'SELECT categories.name as category_name, posts.*
-              FROM posts
-              LEFT JOIN categories ON posts.category_id = categories.id
-              WHERE posts.id = ?
-              LIMIT 0,1
-              ';
-
-    // prepare Statment
-    $stmt = $this->conn->prepare($query);
-
-    // Bind id
-    $stmt->bindParam(1, $this->id);
+    $stmt = $this->conn->prepare("SELECT * FROM products WHERE name LIKE :searchTerm");
+    $stmt->bindValue(":searchTerm", "%$param%", PDO::PARAM_STR);
 
     // Execute query
     $stmt->execute();
@@ -69,16 +61,16 @@ class Post
     $stmt = $this->conn->prepare($query);
 
     // Clean data
-    $this->title = htmlspecialchars(strip_tags($this->title));
-    $this->body = htmlspecialchars(strip_tags($this->body));
-    $this->author = htmlspecialchars(strip_tags($this->author));
-    $this->category_id = htmlspecialchars(strip_tags($this->category_id));
+    // $this->title = htmlspecialchars(strip_tags($this->title));
+    // $this->body = htmlspecialchars(strip_tags($this->body));
+    // $this->author = htmlspecialchars(strip_tags($this->author));
+    // $this->category_id = htmlspecialchars(strip_tags($this->category_id));
 
     // Bind data
-    $stmt->bindParam(':title', $this->title);
-    $stmt->bindParam(':body', $this->body);
-    $stmt->bindParam(':author', $this->author);
-    $stmt->bindParam(':category_id', $this->category_id);
+    // $stmt->bindParam(':title', $this->title);
+    // $stmt->bindParam(':body', $this->body);
+    // $stmt->bindParam(':author', $this->author);
+    // $stmt->bindParam(':category_id', $this->category_id);
 
     // Execute query
     if ($stmt->execute()) {

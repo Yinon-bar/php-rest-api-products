@@ -3,7 +3,8 @@
 class Database
 {
   // DB Params
-  private $host = "193.203.168.3";
+  private $host = "localhost";
+  // private $host = "193.203.168.3";
   private $db_name = 'u528206822_chidon_api';
   private $userName = "u528206822_inon";
   private $password = "INONab@053508384";

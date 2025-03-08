@@ -11,13 +11,13 @@ $database = new Database();
 $db = $database->connect();
 
 // Insantiate blog post object
-$post = new Post($db);
+$product = new Post($db);
 
-// Get the post id
-$post->id = isset($_GET['id']) ? $_GET['id'] : die();
+// Get the product name
+$param = $_GET['name'];
 
 // Blog post query
-$result = $post->get_single_post();
+$result = $product->get_single_post($param);
 // Get row count
 $num = $result->rowCount();
 
